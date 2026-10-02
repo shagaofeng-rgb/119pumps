@@ -26,4 +26,15 @@ Open `http://127.0.0.1:3000`. To test the production build, run `pnpm build` and
 
 ## Before public launch
 
-Replace the brand placeholder, company-specific copy, certifications, contact details, social links, and form delivery settings. Set `NEXT_PUBLIC_SITE_URL` to the new domain. The current inquiry blocks are intentionally inactive until a new destination is configured.
+Replace the brand placeholder, company-specific copy, certifications, contact details, social links, and form delivery settings. Production sitemaps default to `https://119pumps.com`; set `NEXT_PUBLIC_SITE_URL` if the canonical domain changes. The current inquiry blocks are intentionally inactive until a new destination is configured.
+
+## Google Search Console
+
+The Search Console service account key stays in `.secrets/google-search-console.json`, which Git ignores. The account must have Full user or Owner access to the `sc-domain:119pumps.com` property. To check access or submit the public sitemap after the domain works:
+
+```bash
+node scripts/google-search-console.mjs --check
+node scripts/google-search-console.mjs --submit
+```
+
+The site uses a sitemap for its product and article pages. Google's separate Indexing API is limited to eligible job posting and live video pages.
