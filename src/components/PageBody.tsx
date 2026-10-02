@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import type { SitePage } from "@/lib/site";
 import { Hero } from "./Hero";
 import { LegacyInteractions } from "./LegacyInteractions";
@@ -21,7 +22,10 @@ export function PageBody({ page }: { page: SitePage }) {
     )
     : page.html;
   return <>
-    <div className={`sub-hero ${isProductPage ? "product-sub-hero" : ""}`}><div className="site-wrap"><span>{isProductPage ? "PRODUCT" : page.type === "article" || page.type === "news-list" ? "NEWS" : page.type === "case" || page.type === "case-list" ? "APPLICATION" : page.type.startsWith("faq") ? "FAQ" : "ABOUT"}</span><p>{isProductPage ? "Technology cooperation with overseas famous companies" : "Industrial pump solutions"}</p></div></div>
+    <div className={`sub-hero ${isProductPage ? "product-sub-hero" : ""}`}>
+      {isProductPage && <Image className="product-sub-hero-image" src="/hero/mobile-pump.png" alt="" aria-hidden="true" width={2048} height={1152} preload unoptimized />}
+      <div className="site-wrap"><span>{isProductPage ? "PRODUCT" : page.type === "article" || page.type === "news-list" ? "NEWS" : page.type === "case" || page.type === "case-list" ? "APPLICATION" : page.type.startsWith("faq") ? "FAQ" : "ABOUT"}</span><p>{isProductPage ? "Technology cooperation with overseas famous companies" : "Industrial pump solutions"}</p></div>
+    </div>
     {page.type === "placeholder" || brandPages.has(page.path) || page.path.includes("history") || page.path.startsWith("/company-news/") || page.path.startsWith("/social-media/") ? <PendingContent page={page} /> : <><div className={`legacy-content page-type-${page.type}`} dangerouslySetInnerHTML={{ __html: legacyHtml }} /><LegacyInteractions path={page.path} /></>}
   </>;
 }

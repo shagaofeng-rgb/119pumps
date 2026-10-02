@@ -125,10 +125,11 @@ button,input{font:inherit}
 .mega-menu dl a:hover i{width:11px}
 .mega-menu dt.category-title>a:hover,.mega-menu dd>a:hover,.mega-menu dt.category-more>a:hover{background:transparent;color:#d91b04}
 .submenu-toggle{display:none}
-.product-sub-hero{height:250px;box-sizing:border-box;background:#f2f3f3 url('/hero/mobile-pump.png') no-repeat right 65% / auto 450px}
-.product-sub-hero:before{content:'';position:absolute;inset:0;background:linear-gradient(90deg,rgba(255,255,255,.97) 0%,rgba(255,255,255,.91) 34%,rgba(255,255,255,.2) 62%,transparent 100%)}
+.product-sub-hero{height:250px;box-sizing:border-box;background:#f2f3f3}
+.product-sub-hero-image{position:absolute;top:calc(65% - 292.5px);right:0;width:auto;height:450px;max-width:none;z-index:0}
+.product-sub-hero:before{content:'';position:absolute;inset:0;z-index:1;background:linear-gradient(90deg,rgba(255,255,255,.97) 0%,rgba(255,255,255,.91) 34%,rgba(255,255,255,.2) 62%,transparent 100%)}
 .product-sub-hero:after{display:none}
-.product-sub-hero .site-wrap{width:min(890px,calc(100% - 36px))}
+.product-sub-hero .site-wrap{z-index:2;width:min(890px,calc(100% - 36px))}
 .product-sub-hero span{font-size:34px}
 .product-sub-hero p{max-width:300px;font-size:14px;line-height:16px}
 .legacy-content.page-type-product-list .pro_top .search p{line-height:20px}
@@ -149,7 +150,8 @@ button,input{font:inherit}
   .mega-menu dd{padding:2px 0}
   .mega-menu dd>a,.mega-menu dt.category-more>a{font-size:11px;line-height:17px}
   .mega-menu dt.category-picture>a{width:min(140px,100%);margin:6px auto 0}
-  .product-sub-hero{height:180px;background-size:auto 350px;background-position:right 63%}
+  .product-sub-hero{height:180px}
+  .product-sub-hero-image{top:calc(63% - 220.5px);height:350px}
   .product-sub-hero .site-wrap{width:calc(100% - 28px);margin-inline:auto}
   .product-sub-hero span{font-size:30px}
   .product-sub-hero p{max-width:200px;font-size:13px}
