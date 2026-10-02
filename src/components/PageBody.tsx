@@ -13,8 +13,15 @@ function PendingContent({ page }: { page: SitePage }) {
 
 export function PageBody({ page }: { page: SitePage }) {
   if (page.path === "/") return <><Hero /><div className="legacy-content home-content" dangerouslySetInnerHTML={{ __html: page.html }} /><LegacyInteractions path={page.path} /></>;
+  const isProductPage = page.type === "product" || page.type === "product-list";
+  const legacyHtml = page.type === "product-list"
+    ? page.html.replace(
+      '<div class="pro_top"><div class="search">',
+      '<div class="pro_top"><div class="search"><form action="/search" method="get"><input id="searchfield01" name="q" type="text" placeholder="Please enter the product name"/><button id="searchbutton01" type="submit">Search</button></form>',
+    )
+    : page.html;
   return <>
-    <div className="sub-hero"><div className="site-wrap"><span>{page.type === "product" || page.type === "product-list" ? "PRODUCT" : page.type === "article" || page.type === "news-list" ? "NEWS" : page.type === "case" || page.type === "case-list" ? "APPLICATION" : page.type.startsWith("faq") ? "FAQ" : "ABOUT"}</span><p>Industrial pump solutions</p></div></div>
-    {page.type === "placeholder" || brandPages.has(page.path) || page.path.includes("history") || page.path.startsWith("/company-news/") || page.path.startsWith("/social-media/") ? <PendingContent page={page} /> : <><div className={`legacy-content page-type-${page.type}`} dangerouslySetInnerHTML={{ __html: page.html }} /><LegacyInteractions path={page.path} /></>}
+    <div className={`sub-hero ${isProductPage ? "product-sub-hero" : ""}`}><div className="site-wrap"><span>{isProductPage ? "PRODUCT" : page.type === "article" || page.type === "news-list" ? "NEWS" : page.type === "case" || page.type === "case-list" ? "APPLICATION" : page.type.startsWith("faq") ? "FAQ" : "ABOUT"}</span><p>{isProductPage ? "Technology cooperation with overseas famous companies" : "Industrial pump solutions"}</p></div></div>
+    {page.type === "placeholder" || brandPages.has(page.path) || page.path.includes("history") || page.path.startsWith("/company-news/") || page.path.startsWith("/social-media/") ? <PendingContent page={page} /> : <><div className={`legacy-content page-type-${page.type}`} dangerouslySetInnerHTML={{ __html: legacyHtml }} /><LegacyInteractions path={page.path} /></>}
   </>;
 }
