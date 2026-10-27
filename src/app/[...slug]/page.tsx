@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { PageBody } from "@/components/PageBody";
+import { canonicalSiteOrigin } from "@/config/site";
 import { getAllPages, getPage } from "@/lib/site";
 
 type Props = { params: Promise<{ slug: string[] }> };
@@ -20,7 +21,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const page = getPage("/" + slug.join("/"));
   if (!page) return {};
   const pending = page.type === "placeholder" || page.html.includes("identity-content-pending");
-  return { title: page.title || "Page", description: pending ? "New brand information pending." : page.description || undefined, ...(pending ? { robots: { index: false, follow: false } } : {}) };
+  const pagePath = page.path.startsWith("/") ? page.path : `/${page.path}`;
+  const canonicalPath = pagePath === "/" ? "/" : pagePath.replace(/\/+$/, "");
+  return {
+    title: page.title || "Page",
+    description: pending ? "New brand information pending." : page.description || undefined,
+    alternates: { canonical: new URL(canonicalPath, `${canonicalSiteOrigin}/`).toString() },
+    ...(pending ? { robots: { index: false, follow: false } } : {}),
+  };
 }
 
 export default async function ContentPage({ params }: Props) {
