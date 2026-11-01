@@ -9,7 +9,7 @@ import { identity } from "@/config/identity";
 const categories = [
   {
     name: "Fire Pump System",
-    href: "/fire-pump-system/",
+    href: "/fire-pump-system",
     image: "/assets/ad93e9c8deac6fe0a5c6.png",
     products: [
       ["UL-Listed Fire Pump Set", "/fire-pump-system/firepump.html"],
@@ -20,7 +20,7 @@ const categories = [
   },
   {
     name: "Mobile Pump Unit",
-    href: "/products/mobile-pump-unit/",
+    href: "/products/mobile-pump-unit",
     image: "/assets/4bd3fe5fd79db80a144e.jpg",
     products: [
       ["Split Case Series Mobile Pump Truck", "/products/mobile-pump-unit/split-case-series-mobile-pump-truck.html"],
@@ -31,7 +31,7 @@ const categories = [
   },
   {
     name: "Diesel Fire Pump",
-    href: "/products/diesel-fire-pump/",
+    href: "/products/diesel-fire-pump",
     image: "/assets/10860c8b237d3908a610.png",
     products: [
       ["UL Listed Diesel End Suction Fire Pump", "/products/diesel-fire-pump/68.html"],
@@ -42,7 +42,7 @@ const categories = [
   },
   {
     name: "Electric Fire Pump",
-    href: "/products/electric-fire-pump/",
+    href: "/products/electric-fire-pump",
     image: "/assets/984e69592d9e75136354.png",
     products: [
       ["Horizontal Split Case Fire Pump", "/products/electric-fire-pump/split-casing-electric-fire-pump.html"],
@@ -53,7 +53,7 @@ const categories = [
   },
   {
     name: "Spare Parts for Fire Pump",
-    href: "/products/spare-parts-for-fire-pump/",
+    href: "/products/spare-parts-for-fire-pump",
     image: "/assets/2278f95462065f4e12e1.jpg",
     products: [
       ["Gear Box", "/products/spare-parts-for-fire-pump/gear-box.html"],
@@ -64,7 +64,7 @@ const categories = [
   },
   {
     name: "Water Pump",
-    href: "/products/water-pump/",
+    href: "/products/water-pump",
     image: "/assets/3079ed273c4d85aa5bd1.jpg",
     products: [
       ["Submersible Sewage Pump", "/products/water-pump/submersible-sewage-pump.html"],
@@ -77,11 +77,11 @@ const categories = [
 
 const navigation = [
   ["Home", "/"],
-  ["Products", "/products/"],
+  ["Products", "/products"],
   ["About", "/company-profile.html"],
-  ["Application", "/application/"],
-  ["FAQ", "/faq/"],
-  ["News", "/industry-news/"],
+  ["Application", "/application"],
+  ["FAQ", "/faq"],
+  ["News", "/industry-news"],
   ["Service", "/service.html"],
   ["Contact", "/contact.html"],
 ] as const;
@@ -110,7 +110,7 @@ export function SiteHeader() {
         <form className="mobile-search" onSubmit={(event) => {event.preventDefault(); setOpen(false); router.push(`/search?q=${encodeURIComponent(search.trim())}`);}}><input aria-label="Search" value={search} onChange={(event) => setSearch(event.target.value)} placeholder="Search" /><button type="submit">Search</button></form>
         {navigation.map(([label, href]) => {
           const isProducts = label === "Products";
-          const active = pathname === href || (href === "/products/" && pathname.startsWith("/products/"));
+          const active = pathname === href || (href === "/products" && pathname.startsWith("/products/"));
 
           return <div className={`menu-item ${active ? "active" : ""} ${isProducts ? "products-menu" : ""} ${isProducts && productsOpen ? "is-products-open" : ""}`} key={href}>
             <Link href={href} onClick={() => { setOpen(false); setProductsOpen(false); }}>{label}</Link>

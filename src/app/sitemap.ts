@@ -1,5 +1,6 @@
 import type { MetadataRoute } from "next";
 import { canonicalSiteOrigin } from "@/config/site";
+import { canonicalPagePath } from "@/lib/links";
 import { getAllPages } from "@/lib/site";
 
 export default function sitemap(): MetadataRoute.Sitemap {
@@ -8,8 +9,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   return getAllPages().flatMap((page) => {
     if (page.type === "placeholder" || page.html.includes("identity-content-pending")) return [];
 
-    const path = page.path.startsWith("/") ? page.path : `/${page.path}`;
-    const canonicalPath = path === "/" ? "/" : path.replace(/\/+$/, "");
+    const canonicalPath = canonicalPagePath(page.path);
     if (seen.has(canonicalPath)) return [];
     seen.add(canonicalPath);
 

@@ -4,9 +4,9 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 
 const slides = [
-  { eyebrow: "MOBILE PUMP", title: "Emergency water supply", lines: ["Mobile pump for flood control", "Mobile pump for emergency dewatering"], href: "/products/mobile-pump-unit/" },
-  { eyebrow: "FIRE PUMP SYSTEM", title: "Integrated pump packages", lines: ["Electric, diesel and jockey pump systems", "Built for dependable water delivery"], href: "/fire-pump-system/" },
-  { eyebrow: "DIESEL FIRE PUMP", title: "Independent power", lines: ["Fire water supply for critical sites", "Explore the product range"], href: "/products/diesel-fire-pump/" },
+  { eyebrow: "MOBILE PUMP", title: "Emergency water supply", lines: ["Mobile pump for flood control", "Mobile pump for emergency dewatering"], href: "/products/mobile-pump-unit" },
+  { eyebrow: "FIRE PUMP SYSTEM", title: "Integrated pump packages", lines: ["Electric, diesel and jockey pump systems", "Built for dependable water delivery"], href: "/fire-pump-system" },
+  { eyebrow: "DIESEL FIRE PUMP", title: "Independent power", lines: ["Fire water supply for critical sites", "Explore the product range"], href: "/products/diesel-fire-pump" },
 ];
 
 export function Hero() {

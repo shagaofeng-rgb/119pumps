@@ -4,6 +4,7 @@ import type { SitePage } from "@/lib/site";
 import { Hero } from "./Hero";
 import { LegacyInteractions } from "./LegacyInteractions";
 import { identity } from "@/config/identity";
+import { normalizeLegacyHtmlLinks } from "@/lib/links";
 
 const brandPages = new Set(["/company-profile.html", "/factory-show/", "/customer-witness/", "/certificate/", "/certificate/domestic/", "/certificate/international/", "/service.html", "/contact.html", "/service-guarantee.html", "/shopping-guide.html", "/method-of-payment.html", "/the-contract-sample/", "/video/", "/test-video/"]);
 
@@ -13,15 +14,15 @@ function PendingContent({ page }: { page: SitePage }) {
 }
 
 export function PageBody({ page }: { page: SitePage }) {
-  if (page.path === "/") return <><Hero /><div className="legacy-content home-content" dangerouslySetInnerHTML={{ __html: page.html }} /><LegacyInteractions path={page.path} /></>;
+  if (page.path === "/") return <><Hero /><div className="legacy-content home-content" dangerouslySetInnerHTML={{ __html: normalizeLegacyHtmlLinks(page.html) }} /><LegacyInteractions path={page.path} /></>;
   const isProductPage = page.type === "product" || page.type === "product-list";
   const isProductListing = page.html.includes('<div class="pro_top"><div class="search">');
-  const legacyHtml = isProductListing
+  const legacyHtml = normalizeLegacyHtmlLinks(isProductListing
     ? page.html.replace(
       '<div class="pro_top"><div class="search">',
       '<div class="pro_top"><div class="search"><form action="/search" method="get"><input id="searchfield01" name="q" type="text" placeholder="Please enter the product name"/><button id="searchbutton01" type="submit">Search</button></form>',
     )
-    : page.html;
+    : page.html);
   return <>
     <div className={`sub-hero ${isProductPage ? "product-sub-hero" : ""}`}>
       {isProductPage && <Image className="product-sub-hero-image" src="/hero/mobile-pump.png" alt="" aria-hidden="true" width={2048} height={1152} preload unoptimized />}
