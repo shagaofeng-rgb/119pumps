@@ -1,9 +1,11 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { PageBody } from "@/components/PageBody";
+import { InteriorShell } from "@/components/interior/Shell";
+import { InteriorContent } from "@/components/interior/Content";
 import { canonicalSiteOrigin } from "@/config/site";
 import { canonicalPagePath } from "@/lib/links";
 import { getAllPages, getPage } from "@/lib/site";
+import { interiorPage } from "@/lib/interior";
 
 type Props = { params: Promise<{ slug: string[] }> };
 
@@ -35,5 +37,7 @@ export default async function ContentPage({ params }: Props) {
   const { slug } = await params;
   const page = getPage("/" + slug.join("/"));
   if (!page) notFound();
-  return <PageBody page={page} />;
+  const view = interiorPage(page.path);
+  if (!view) notFound();
+  return <InteriorShell page={view}><InteriorContent page={view} /></InteriorShell>;
 }

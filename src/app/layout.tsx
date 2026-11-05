@@ -1,12 +1,11 @@
 import type { Metadata } from "next";
-import { SiteHeader } from "@/components/SiteHeader";
-import { SiteFooter } from "@/components/SiteFooter";
 import { canonicalSiteOrigin } from "@/config/site";
 import "./legacy.css";
 import "./globals.css";
+import "./interior.css";
 
 export const metadata: Metadata = { metadataBase: new URL(canonicalSiteOrigin), title: { default: "Industrial Pump Solutions", template: "%s | Industrial Pump Solutions" }, description: "Industrial pump products, systems, applications and technical resources." };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
-  return <html lang="en"><body><SiteHeader /><main id="main-content">{children}</main><SiteFooter /></body></html>;
+  return <html lang="en"><body>{children}</body></html>;
 }

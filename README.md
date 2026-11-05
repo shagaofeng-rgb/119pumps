@@ -18,15 +18,17 @@ Open `http://127.0.0.1:3000`. To test the production build, run `pnpm build` and
 ## Content
 
 - `src/data/site.json`: imported page text, page templates, and local image paths.
+- `src/data/interior.json`: structured content and original pagination for the redesigned inner pages. After editing the archive, regenerate it with `python3 scripts/build-interior-data.py` (requires `beautifulsoup4`) and commit the output.
 - `public/assets`: local content images.
-- `src/app/legacy.css` and `public/images`: styles and decorative assets used to preserve the existing page layouts.
+- `src/app/legacy.css` and `public/images`: existing home styles and assets.
+- `src/components/interior`, `src/app/interior.css`, and `public/interior`: shared inner page templates, scoped styles, and assets.
 - `public/hero`: new brand-neutral hero artwork.
 - `src/components`: shared header, footer, hero, and page renderer.
 - `src/config/identity.ts`: new brand and contact fields to fill later.
 
 ## Before public launch
 
-Replace the brand placeholder, company-specific copy, certifications, contact details, social links, and form delivery settings. Production sitemaps default to `https://119pumps.com`; set `NEXT_PUBLIC_SITE_URL` if the canonical domain changes. The current inquiry blocks are intentionally inactive until a new destination is configured.
+Replace the brand placeholder, company-specific copy, certifications, contact details, social links, and form delivery settings. The production canonical origin is `https://www.119pumps.com`, configured in `src/config/site.ts`. Inquiry delivery remains unavailable until a destination is configured. Confirm archived product specifications against model datasheets before using them for selection.
 
 ## Google Search Console
 

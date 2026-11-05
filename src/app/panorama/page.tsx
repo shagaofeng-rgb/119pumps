@@ -1,5 +1,7 @@
-import Link from "next/link";
+import { Pending } from "@/components/interior/Information";
+import { InteriorShell } from "@/components/interior/Shell";
+import { panoramaPage } from "@/lib/interior";
 
 export default function Panorama() {
-  return <div className="pending-content site-wrap"><div className="breadcrumb"><Link href="/">Home</Link> &gt; Panorama</div><div className="pending-panel"><p className="pending-kicker">CONTENT PENDING</p><h1>Panorama</h1><p>A new brand panorama can be added here.</p></div></div>;
+  return <InteriorShell page={panoramaPage}><Pending page={panoramaPage} /></InteriorShell>;
 }

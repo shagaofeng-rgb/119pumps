@@ -11,8 +11,13 @@ export type SitePage = {
 const pages = data as Record<string, SitePage>;
 
 export function getPage(path: string): SitePage | undefined {
-  const decoded = decodeURIComponent(path);
-  return pages[decoded] ?? pages[decoded.endsWith("/") ? decoded.slice(0, -1) : decoded + "/"];
+  const lookup = (key: string) => {
+    const alternate = key.endsWith("/") ? key.slice(0, -1) : key + "/";
+    return pages[key] ?? pages[alternate] ?? (key.startsWith("/") && key !== "/" ? pages[key.slice(1)] ?? pages[alternate.slice(1)] : undefined);
+  };
+  const exact = lookup(path);
+  if (exact) return exact;
+  try { return lookup(decodeURIComponent(path)); } catch { return undefined; }
 }
 
 export function getAllPages(): SitePage[] {
