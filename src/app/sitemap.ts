@@ -2,6 +2,7 @@ import type { MetadataRoute } from "next";
 import { canonicalSiteOrigin } from "@/config/site";
 import { canonicalPagePath } from "@/lib/links";
 import { getAllPages } from "@/lib/site";
+import { interiorPage } from "@/lib/interior";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const seen = new Set<string>();
@@ -10,6 +11,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     if (page.type === "placeholder" || page.html.includes("identity-content-pending")) return [];
 
     const canonicalPath = canonicalPagePath(page.path);
+    if (interiorPage(canonicalPath)?.pending) return [];
     if (seen.has(canonicalPath)) return [];
     seen.add(canonicalPath);
 

@@ -115,6 +115,10 @@ export function listingEntries(page: InteriorPage) {
   const scope = listScope(page);
   const paths = new Set(scope.map((item) => item.p));
   const archived = references(page.links).filter((item) => paths.has(item.p));
+  if (page.t === "product-list" && !page.base && page.p !== "/products") {
+    const listed = new Set([...(page.links ?? []), ...archivedPages(page).flatMap((entry) => entry.links ?? [])]);
+    return [...archived, ...scope.filter((item) => !listed.has(item.p))];
+  }
   return archivedPages(page).length ? archived : (archived.length ? archived : scope);
 }
 

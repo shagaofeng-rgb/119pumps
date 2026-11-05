@@ -3,7 +3,8 @@ import { readFile } from "node:fs/promises";
 import { resolve } from "node:path";
 
 const property = "sc-domain:119pumps.com";
-const sitemapUrl = "https://119pumps.com/sitemap.xml";
+const siteOrigin = "https://www.119pumps.com";
+const sitemapUrl = `${siteOrigin}/sitemap.xml`;
 const credentialsPath = resolve(
   process.env.GOOGLE_APPLICATION_CREDENTIALS || ".secrets/google-search-console.json",
 );
@@ -71,7 +72,7 @@ async function main() {
   }
   if (!sitemapResponse.ok) throw new Error(`The public sitemap is unavailable (HTTP ${sitemapResponse.status}).`);
   const sitemap = await sitemapResponse.text();
-  if (!sitemap.includes("<urlset") || !sitemap.includes("https://119pumps.com/")) {
+  if (!sitemap.includes("<urlset") || !sitemap.includes(`${siteOrigin}/`)) {
     throw new Error("The public sitemap does not contain 119pumps.com URLs.");
   }
   const endpoint = `https://www.googleapis.com/webmasters/v3/sites/${encodeURIComponent(property)}/sitemaps/${encodeURIComponent(sitemapUrl)}`;

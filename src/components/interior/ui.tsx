@@ -40,7 +40,9 @@ export function SectionHeading({ children, action }: { children: ReactNode; acti
 
 export function Chips({ pages, active }: { pages: InteriorPage[]; active: string }) {
   return <nav className="chips" aria-label="Related sections">
-    {pages.map((p) => <LocalLink key={p.p} className="pill" aria-current={p.p === active ? "page" : undefined} href={p.p}>{p.name}</LocalLink>)}
+    {pages.map((p) => p.p === active
+      ? <span key={p.p} className="pill" aria-current="page">{p.name}</span>
+      : <LocalLink key={p.p} className="pill" href={p.p}>{p.name}</LocalLink>)}
   </nav>;
 }
 

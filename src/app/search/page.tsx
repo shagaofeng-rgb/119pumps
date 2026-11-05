@@ -1,8 +1,10 @@
+import type { Metadata } from "next";
 import { InteriorShell } from "@/components/interior/Shell";
 import { Action, Heading, Icon, LocalLink, Notice, Row, Section } from "@/components/interior/ui";
 import { findInteriorPages, interiorPage, type InteriorPage } from "@/lib/interior";
 
 const page: InteriorPage = { p: "/search", t: "search", name: "Site search" };
+export const metadata: Metadata = { title: "Site search", robots: { index: false, follow: true } };
 
 export default async function SearchPage({ searchParams }: { searchParams: Promise<{ q?: string | string[]; scope?: string | string[] }> }) {
   const { q, scope } = await searchParams;

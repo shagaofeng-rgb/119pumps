@@ -92,3 +92,44 @@
 .interior {
   & .card h3, & .side-note h2, & .slot h3 { font-weight:750; }
 }
+
+.interior {
+  & .product {
+    grid-template-areas: "gallery heading" "gallery summary";
+    grid-template-rows: auto 1fr;
+    row-gap: 0;
+  }
+  & .product-heading { grid-area: heading; min-width: 0; }
+  & .product-gallery { grid-area: gallery; min-width: 0; }
+  & .product-summary { grid-area: summary; min-width: 0; }
+  & .catalog-directory { margin-block-start: 22px; }
+  & .topic-section + .topic-section { margin-block-start: 30px; }
+  & .topic-section > .fine { margin-block: 0 12px; }
+  & .topic-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+  & .topic-card {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    gap: 10px;
+    align-items: start;
+    padding: 18px 14px;
+    border: 1px solid var(--line);
+    background: var(--light);
+    border-radius: 3px;
+  }
+  & .topic-card:hover { border-color: var(--red); }
+  & .topic-card h3, & .enquiry-steps h2 { font-size: 16px; line-height: 1.35; font-weight: 750; }
+  & .topic-card p, & .enquiry-steps p { color: var(--muted); font-size: 13px; margin-block-start: 5px; }
+  & .enquiry-steps { padding-inline-start: 24px; margin-block-end: 28px; }
+  & .enquiry-steps li { list-style: decimal; padding: 13px 4px; border-bottom: 1px solid var(--line); }
+  & .nav-mobile summary { display: grid; place-items: center; min-width: 44px; min-height: 44px; }
+  @container (max-width: 760px) {
+    & .topic-grid { grid-template-columns: 1fr; }
+  }
+  @container (max-width: 610px) {
+    & .product { grid-template-areas: "heading" "gallery" "summary"; grid-template-rows: auto; row-gap: 10px; }
+    & .product-gallery .photo-box { height: clamp(145px, 46cqw, 235px); min-height: 0; aspect-ratio: auto; padding: 12px; }
+    & .product-gallery .photo-box img { max-height: 100%; }
+    & .product .lede { margin-block-start: 0; }
+    & .product .actions .btn { min-height: 44px; }
+  }
+}

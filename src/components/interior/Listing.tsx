@@ -14,8 +14,9 @@ function Pagination({ page }: { page: InteriorPage }) {
   const next = ordered[current + 1];
   return <nav className="pagination" aria-label="Pagination">
     {prev && <a className="btn" rel="prev" href={prev.p}>Previous</a>}
-    {nearby.map((item) => <a className="btn" key={item.p} href={item.p} aria-current={item.p === page.p ? "page" : undefined}
-      aria-label={`Page ${item.page ?? 1}`}>{item.page ?? 1}</a>)}
+    {nearby.map((item) => item.p === page.p
+      ? <span className="btn" key={item.p} aria-current="page" aria-label={`Page ${item.page ?? 1}`}>{item.page ?? 1}</span>
+      : <a className="btn" key={item.p} href={item.p} aria-label={`Page ${item.page ?? 1}`}>{item.page ?? 1}</a>)}
     {next && <a className="btn" rel="next" href={next.p}>Next</a>}
     <span className="fine">Page {n} / {ordered.length}</span>
   </nav>;
@@ -43,6 +44,7 @@ export function Catalog({ page }: { page: InteriorPage }) {
         {allProducts && !page.page && <Chips pages={references(["/fire-pump-system", "/products/diesel-fire-pump", "/products/electric-fire-pump", "/products/mobile-pump-unit", "/products/water-pump"])} active={base} />}
         <FilteredEntries page={page} items={listingEntries(page)} grid count={`${listScope(page).length} products in catalog`} placeholder="Filter by model or name" />
         <Pagination page={page} />
+        {allProducts && <p className="catalog-directory"><LocalLink href="/product-index.html" className="text-link">Open the complete product index <Icon name="arrow-right" /></LocalLink></p>}
       </div>
     </div></Section>
   </>;

@@ -24,8 +24,9 @@ export function Product({ page }: { page: InteriorPage }) {
 
   return <div className="wrap">
     <section className="product">
-      <ProductMedia key={page.p} name={page.name} photos={page.photos ?? []} />
-      <div><p className="kicker">{category?.name ?? "Industrial pumps"}</p><h1>{page.name}</h1><p className="lede">{noun}</p>
+      <div className="product-heading"><p className="kicker">{category?.name ?? "Industrial pumps"}</p><h1>{page.name}</h1></div>
+      <div className="product-gallery"><ProductMedia key={page.p} name={page.name} photos={page.photos ?? []} /></div>
+      <div className="product-summary"><p className="lede">{noun}</p>
         {page.specs?.length ? <dl className="specs">{page.specs.map(([key, value], i) => <div className="spec" key={i}>
           <dt className="row"><Icon name={specIcon(key)} />{key}</dt><dd>{value}</dd>
         </div>)}</dl> : <Notice>Model specifications are pending.</Notice>}

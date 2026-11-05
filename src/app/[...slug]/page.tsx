@@ -5,7 +5,7 @@ import { InteriorContent } from "@/components/interior/Content";
 import { canonicalSiteOrigin } from "@/config/site";
 import { canonicalPagePath } from "@/lib/links";
 import { getAllPages, getPage } from "@/lib/site";
-import { interiorPage } from "@/lib/interior";
+import { interiorPage, listingEntries, productCategory } from "@/lib/interior";
 
 type Props = { params: Promise<{ slug: string[] }> };
 
@@ -26,13 +26,27 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   const page = getPage("/" + slug.join("/"));
   if (!page) return {};
-  const pending = page.type === "placeholder" || page.html.includes("identity-content-pending");
+  const view = interiorPage(page.path);
+  const pending = view?.pending || page.type === "placeholder" || page.html.includes("identity-content-pending");
   const canonicalPath = canonicalPagePath(page.path);
+  const isResourceHub = ["/service.html", "/shopping-guide.html", "/company-profile.html"].includes(canonicalPath);
+  let title = page.title || "Page";
+  let description = page.description || undefined;
+  if (view?.t === "product") {
+    title = view.name;
+    const category = productCategory(view)?.name;
+    const materials = view.sections?.length ? "View product images, specifications and technical information." : "View the product images and available specifications.";
+    description = `${view.name}${category && !view.name.toLowerCase().includes(category.toLowerCase()) ? ` in ${category}` : ""}. ${materials}`;
+  } else if (view && ["product-list", "faq-list", "news-list", "index", "gallery"].includes(view.t)) {
+    title = view.name;
+    const firstItems = listingEntries(view).slice(0, 2).map((entry) => entry.name).join("; ");
+    if (firstItems) description = `${view.name}. Includes ${firstItems}.`.slice(0, 180);
+  }
   return {
-    title: page.title || "Page",
-    description: pending ? "New brand information pending." : page.description || undefined,
+    title,
+    description: pending ? "Information and related resources." : description,
     alternates: { canonical: new URL(canonicalPath, `${canonicalSiteOrigin}/`).toString() },
-    ...(pending ? { robots: { index: false, follow: false } } : {}),
+    ...(pending ? { robots: { index: false, follow: isResourceHub } } : {}),
   };
 }
 
