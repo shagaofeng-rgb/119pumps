@@ -9,6 +9,9 @@ import { interiorPage } from "@/lib/interior";
 
 type Props = { params: Promise<{ slug: string[] }> };
 
+// The archive supplies every valid slug; unlisted URLs use the site's 404.
+export const dynamicParams = false;
+
 export function generateStaticParams() {
   const seen = new Set<string>();
   return getAllPages().filter((page) => page.path !== "/" && !["/search", "/panorama"].includes(page.path)).map((page) => ({ slug: page.path.split("/").filter(Boolean) })).filter(({ slug }) => {
